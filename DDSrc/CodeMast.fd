@@ -1,0 +1,5 @@
+#REPLACE FILE253 CodeMast
+#REPLACE CodeMast.Recnum |FN253,0
+#REPLACE CodeMast.Type |FS253,1
+#REPLACE CodeMast.Code |FS253,2
+#REPLACE CodeMast.Description |FS253,3

@@ -1,0 +1,7 @@
+#REPLACE FILE103 Jugador
+#REPLACE Jugador.Recnum |FN103,0
+#REPLACE Jugador.ID |FN103,1
+#REPLACE Jugador.Nombre |FS103,2
+#REPLACE Jugador.Apellido |FS103,3
+#REPLACE Jugador.Nacionalidad |FS103,4
+#REPLACE Jugador.EquipoID |FN103,5

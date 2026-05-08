@@ -1,0 +1,108 @@
+Use AllWebAppClasses.pkg
+Use cConnection.pkg
+Use cWebMenuItem.pkg
+
+Register_Object oDashboard
+Register_Object oSelectEntrenador
+Register_Object oSelectJugador
+Register_Object oSelectPosicion
+Register_Object oSelectEquipo
+Register_Object oSelectLiga
+
+Object oApplication is a cApplication
+    Object oConnection is a cConnection
+        Use LoginEncryption.pkg
+    End_Object
+End_Object
+
+Object oWebApp is a cWebApp
+    Set psTheme to "Df_Material"
+    Set peAlignView to alignCenter
+    Set psApplicationTitle to "FutbolWebApp"
+    Set peApplicationStyle to wvsDrillDown
+    Set peApplicationStateMode to asmHistoryAndUrls
+    Set peLoginMode to lmLoginNone
+
+    Object oViewStack is a cWebViewStack
+    End_Object
+
+    Object oHeaderPanel is a cWebPanel
+        Set peRegion to prTop
+        Set psCSSClass to "HeaderPanel"
+
+        Object oMenuPanel is a cWebPanel
+            Set peRegion to prLeft
+            Set piWidth to 50
+
+            Object oMenuButton is a cWebMenuButton
+                Set piMenuHeight to 420
+
+                Object oDashboard_itm is a cWebMenuItem
+                    Set psCaption to "Dashboard"
+                    WebRegisterPath ntNavigateBegin oDashboard
+                    Procedure OnClick
+                        Send NavigatePath
+                    End_Procedure
+                End_Object
+
+                Object oEntrenadores_itm is a cWebMenuItem
+                    Set psCaption to "Entrenadores"
+                    WebRegisterPath ntNavigateBegin oSelectEntrenador
+                    Procedure OnClick
+                        Send NavigatePath
+                    End_Procedure
+                End_Object
+
+                Object oJugadores_itm is a cWebMenuItem
+                    Set psCaption to "Jugadores"
+                    WebRegisterPath ntNavigateBegin oSelectJugador
+                    Procedure OnClick
+                        Send NavigatePath
+                    End_Procedure
+                End_Object
+
+                Object oPosiciones_itm is a cWebMenuItem
+                    Set psCaption to "Posiciones"
+                    WebRegisterPath ntNavigateBegin oSelectPosicion
+                    Procedure OnClick
+                        Send NavigatePath
+                    End_Procedure
+                End_Object
+
+                Object oEquipos_itm is a cWebMenuItem
+                    Set psCaption to "Equipos"
+                    WebRegisterPath ntNavigateBegin oSelectEquipo
+                    Procedure OnClick
+                        Send NavigatePath
+                    End_Procedure
+                End_Object
+
+                Object oLigas_itm is a cWebMenuItem
+                    Set psCaption to "Ligas"
+                    WebRegisterPath ntNavigateBegin oSelectLiga
+                    Procedure OnClick
+                        Send NavigatePath
+                    End_Procedure
+                End_Object
+            End_Object
+        End_Object
+    End_Object
+
+    Use SessionManager.wo
+    Use WebResourceManager.wo
+    Use Dashboard.wo
+    Set phoDefaultView to oDashboard
+
+    Use SelectEntrenador.wo
+    Use ZoomEntrenador.wo
+    Use SelectJugador.wo
+    Use ZoomJugador.wo
+    Use SelectPosicion.wo
+    Use ZoomPosicion.wo
+    Use SelectEquipo.wo
+    Use ZoomEquipo.wo
+    Use SelectLiga.wo
+    Use ZoomLiga.wo
+End_Object
+
+Send StartWebApp of oWebApp

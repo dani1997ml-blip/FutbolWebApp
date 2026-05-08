@@ -1,0 +1,7 @@
+#REPLACE FILE100 Liga
+#REPLACE Liga.Recnum |FN100,0
+#REPLACE Liga.ID |FN100,1
+#REPLACE Liga.Nombre |FS100,2
+#REPLACE Liga.Pais |FS100,3
+#REPLACE Liga.Equipos |FN100,4
+#REPLACE Liga.EquiposMax |FN100,5

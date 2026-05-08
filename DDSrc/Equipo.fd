@@ -1,0 +1,5 @@
+#REPLACE FILE101 Equipo
+#REPLACE Equipo.Recnum |FN101,0
+#REPLACE Equipo.ID |FN101,1
+#REPLACE Equipo.Nombre |FS101,2
+#REPLACE Equipo.LigaID |FN101,3

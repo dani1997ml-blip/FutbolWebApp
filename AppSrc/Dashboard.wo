@@ -1,0 +1,77 @@
+Use cWebView.pkg
+Use cWebPanel.pkg
+Use cWebButton.pkg
+Use cWebHtmlBox.pkg
+
+Register_Object oSelectEntrenador
+Register_Object oSelectJugador
+Register_Object oSelectPosicion
+Register_Object oSelectEquipo
+Register_Object oSelectLiga
+
+Object oDashboard is a cWebView
+    Set psCaption to "Dashboard"
+    Set pbFillHeight to True
+    Set peViewType to vtUndefined
+    Set pbShowCaption to False
+    Set psCSSClass to "FutbolDashboard"
+
+    Object oWebMainPanel is a cWebPanel
+        Set piColumnCount to 12
+
+        Object oTitle is a cWebHtmlBox
+            Set piColumnSpan to 12
+            Set psHtml to "<h1>FutbolWebApp</h1>"
+        End_Object
+
+        Object oEntrenadorTile is a cWebButton
+            Set piColumnSpan to 4
+            Set psCaption to "Entrenadores"
+            Set psCSSClass to "DashboardTile"
+            WebRegisterPath ntNavigateForwardCustom oSelectEntrenador
+            Procedure OnClick
+                Send NavigateForward of oSelectEntrenador Self
+            End_Procedure
+        End_Object
+
+        Object oJugadorTile is a cWebButton
+            Set piColumnSpan to 4
+            Set psCaption to "Jugadores"
+            Set psCSSClass to "DashboardTile"
+            WebRegisterPath ntNavigateForwardCustom oSelectJugador
+            Procedure OnClick
+                Send NavigateForward of oSelectJugador Self
+            End_Procedure
+        End_Object
+
+        Object oPosicionTile is a cWebButton
+            Set piColumnSpan to 4
+            Set psCaption to "Posiciones"
+            Set psCSSClass to "DashboardTile"
+            WebRegisterPath ntNavigateForwardCustom oSelectPosicion
+            Procedure OnClick
+                Send NavigateForward of oSelectPosicion Self
+            End_Procedure
+        End_Object
+
+        Object oEquipoTile is a cWebButton
+            Set piColumnSpan to 6
+            Set psCaption to "Equipos"
+            Set psCSSClass to "DashboardTile"
+            WebRegisterPath ntNavigateForwardCustom oSelectEquipo
+            Procedure OnClick
+                Send NavigateForward of oSelectEquipo Self
+            End_Procedure
+        End_Object
+
+        Object oLigaTile is a cWebButton
+            Set piColumnSpan to 6
+            Set psCaption to "Ligas"
+            Set psCSSClass to "DashboardTile"
+            WebRegisterPath ntNavigateForwardCustom oSelectLiga
+            Procedure OnClick
+                Send NavigateForward of oSelectLiga Self
+            End_Procedure
+        End_Object
+    End_Object
+End_Object

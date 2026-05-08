@@ -1,0 +1,25 @@
+# DataFlex build output
+Programs/*.exe
+Programs/*.dbg
+Programs/*.pdb
+Programs/*.map
+Programs/*.prn
+Programs/*.err
+Programs/*.flx
+Data/*.cch
+Data/*.x64.cch
+AppSrc/*.dep
+AppSrc/*.err
+AppSrc/*.prn
+
+# Runtime and temporary files
+*.log
+*.tmp
+*.bak
+*.cache
+
+# Local editor and OS files
+.vs/
+.vscode/
+Thumbs.db
+Desktop.ini

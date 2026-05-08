@@ -1,0 +1,48 @@
+Use cWebView.pkg
+Use cWebPanel.pkg
+Use cWebForm.pkg
+Use cWebMenuGroup.pkg
+Use cWebMenuItem.pkg
+Use cPosicionDataDictionary.dd
+
+Object oZoomPosicion is a cWebView
+    Set peViewType to vtZoom
+    Set psCaption to "Posicion"
+    Set pbShowCaption to False
+    Set piMaxWidth to 1024
+    Set Verify_Save_msg to 0
+    Object oPosicion_DD is a cPosicionDataDictionary
+    End_Object
+    Set Main_DD to oPosicion_DD
+    Set Server to oPosicion_DD
+    Object oWebMainPanel is a cWebPanel
+        Set piColumnCount to 12
+        Object oID is a cWebForm
+            Entry_Item Posicion.ID
+            Set piColumnSpan to 4
+            Set psLabel to "ID"
+            Set pbReadOnly to True
+        End_Object
+        Object oNombre is a cWebForm
+            Entry_Item Posicion.Nombre
+            Set piColumnSpan to 8
+            Set psLabel to "Nombre"
+        End_Object
+    End_Object
+    Object oActionGroup is a cWebMenuGroup
+        Object oSave is a cWebMenuItem
+            Set psCaption to "Save"
+            Set psCSSClass to "WebSaveMenuItem"
+            Procedure OnClick
+                Send Request_Save
+            End_Procedure
+        End_Object
+        Object oDelete is a cWebMenuItem
+            Set psCaption to "Delete"
+            Set psCSSClass to "WebDeleteMenuItem"
+            Procedure OnClick
+                Send Request_Delete
+            End_Procedure
+        End_Object
+    End_Object
+End_Object

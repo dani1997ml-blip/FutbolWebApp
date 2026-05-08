@@ -1,0 +1,23 @@
+Use DataDict.pkg
+Open Liga
+
+Class cLigaDataDictionary is a DataDictionary
+    Procedure Construct_Object
+        Forward Send Construct_Object
+        Set Main_File to Liga.File_Number
+        Set Cascade_Delete_State to False
+        Set Foreign_Field_Option DD_KEYFIELD DD_FINDREQ to True
+        Set Foreign_Field_Option DD_INDEXFIELD DD_NOPUT to True
+        Set Foreign_Field_Option DD_DEFAULT DD_DISPLAYONLY to True
+        Set Field_Option Field Liga.ID DD_NOPUT to True
+        Set Key_Field_State Field Liga.ID to True
+        Set Field_Label_Long Field Liga.ID to "ID"
+        Set Field_Label_Long Field Liga.Nombre to "Nombre"
+        Set Field_Label_Long Field Liga.Pais to "Pais"
+        Set Field_Label_Long Field Liga.Equipos to "Equipos"
+        Set Field_Label_Long Field Liga.EquiposMax to "Equipos maximos"
+        Set Field_Option Field Liga.Nombre DD_REQUIRED to True
+        Set Field_Option Field Liga.Pais DD_REQUIRED to True
+        Set piPrimaryIndex to 1
+    End_Procedure
+End_Class

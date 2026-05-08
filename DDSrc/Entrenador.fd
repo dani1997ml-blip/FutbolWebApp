@@ -1,0 +1,7 @@
+#REPLACE FILE102 Entrenador
+#REPLACE Entrenador.Recnum |FN102,0
+#REPLACE Entrenador.ID |FN102,1
+#REPLACE Entrenador.Nombre |FS102,2
+#REPLACE Entrenador.Apellido |FS102,3
+#REPLACE Entrenador.Nacionalidad |FS102,4
+#REPLACE Entrenador.EquipoID |FN102,5

@@ -1,0 +1,76 @@
+Use cWebView.pkg
+Use cWebPanel.pkg
+Use cWebColumn.pkg
+Use cWebColumnButton.pkg
+Use cWebMenuGroup.pkg
+Use cWebMenuItem.pkg
+Use cEquipoDataDictionary.dd
+
+Register_Object oZoomEquipo
+
+Object oSelectEquipo is a cWebView
+    Set psCaption to "Equipos"
+    Set peViewType to vtSelect
+    Set piMaxWidth to 1024
+    Set pbShowCaption to False
+    Set psStateViewName to "Equipos"
+
+    Object oEquipo_DD is a cEquipoDataDictionary
+    End_Object
+    Set Main_DD to oEquipo_DD
+    Set Server to oEquipo_DD
+
+    Object oList is a cWebList
+        Set piColumnSpan to 0
+        Set pbServerOnRowClick to True
+        Set pbFillHeight to True
+        Set psCSSClass to "MobileList"
+        Set piSortColumn to 0
+        Set pbShowHeader to False
+        Object oNombre is a cWebColumn
+            Entry_Item Equipo.Nombre
+            Set psCaption to "Nombre"
+            Set psCSSClass to "RowCaption"
+        End_Object
+        Object oDetailButton is a cWebColumnButton
+            Set piWidth to 58
+            Set pbFixedWidth to True
+            Set psBtnCssClass to "WebButtonIcon WebIcon_Info"
+            WebRegisterPath ntNavigateForward oZoomEquipo
+            Procedure OnClick String sButton String sRowId
+                Send NavigatePath
+            End_Procedure
+        End_Object
+        Object oLigaID is a cWebColumn
+            Entry_Item Equipo.LigaID
+            Set psCaption to "Liga"
+            Set pbNewLine to True
+            Set psCSSClass to "RowDetail"
+        End_Object
+        WebRegisterPath ntNavigateForward oZoomEquipo Self
+        Procedure OnRowClick String sRowID
+            Send NavigateForward to oZoomEquipo Self
+        End_Procedure
+    End_Object
+
+    Object oActionGroup is a cWebMenuGroup
+        Object oSearch is a cWebMenuItem
+            Set psCaption to "Search"
+            Set psCSSClass to "WebPromptMenuItem"
+            Procedure OnClick
+                Send Search of oList
+            End_Procedure
+        End_Object
+        Object oNewButton is a cWebMenuItem
+            Set psCaption to "New Equipo"
+            Set psCSSClass to "WebClearMenuItem"
+            WebRegisterPath ntNavigateForward oZoomEquipo
+            Procedure OnClick
+                Send NavigatePath
+            End_Procedure
+            Procedure OnGetNavigateForwardData tWebNavigateData ByRef NavigateData Handle hoToView
+                Move True to NavigateData.bNewRecord
+            End_Procedure
+        End_Object
+    End_Object
+End_Object

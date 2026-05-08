@@ -1,0 +1,4 @@
+#REPLACE FILE104 Posicion
+#REPLACE Posicion.Recnum |FN104,0
+#REPLACE Posicion.ID |FN104,1
+#REPLACE Posicion.Nombre |FS104,2

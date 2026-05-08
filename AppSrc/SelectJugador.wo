@@ -1,0 +1,81 @@
+Use cWebView.pkg
+Use cWebPanel.pkg
+Use cWebColumn.pkg
+Use cWebColumnButton.pkg
+Use cWebMenuGroup.pkg
+Use cWebMenuItem.pkg
+Use cJugadorDataDictionary.dd
+
+Register_Object oZoomJugador
+
+Object oSelectJugador is a cWebView
+    Set psCaption to "Jugadores"
+    Set peViewType to vtSelect
+    Set piMaxWidth to 1024
+    Set pbShowCaption to False
+    Set psStateViewName to "Jugadores"
+
+    Object oJugador_DD is a cJugadorDataDictionary
+    End_Object
+    Set Main_DD to oJugador_DD
+    Set Server to oJugador_DD
+
+    Object oList is a cWebList
+        Set piColumnSpan to 0
+        Set pbServerOnRowClick to True
+        Set pbFillHeight to True
+        Set psCSSClass to "MobileList"
+        Set piSortColumn to 0
+        Set pbShowHeader to False
+        Object oApellido is a cWebColumn
+            Entry_Item Jugador.Apellido
+            Set psCaption to "Apellido"
+            Set psCSSClass to "RowCaption"
+        End_Object
+        Object oDetailButton is a cWebColumnButton
+            Set piWidth to 58
+            Set pbFixedWidth to True
+            Set psBtnCssClass to "WebButtonIcon WebIcon_Info"
+            WebRegisterPath ntNavigateForward oZoomJugador
+            Procedure OnClick String sButton String sRowId
+                Send NavigatePath
+            End_Procedure
+        End_Object
+        Object oNombre is a cWebColumn
+            Entry_Item Jugador.Nombre
+            Set psCaption to "Nombre"
+            Set pbNewLine to True
+            Set psCSSClass to "RowDetail"
+        End_Object
+        Object oNacionalidad is a cWebColumn
+            Entry_Item Jugador.Nacionalidad
+            Set psCaption to "Nacionalidad"
+            Set psCSSClass to "RowDetail"
+        End_Object
+        WebRegisterPath ntNavigateForward oZoomJugador Self
+        Procedure OnRowClick String sRowID
+            Send NavigateForward to oZoomJugador Self
+        End_Procedure
+    End_Object
+
+    Object oActionGroup is a cWebMenuGroup
+        Object oSearch is a cWebMenuItem
+            Set psCaption to "Search"
+            Set psCSSClass to "WebPromptMenuItem"
+            Procedure OnClick
+                Send Search of oList
+            End_Procedure
+        End_Object
+        Object oNewButton is a cWebMenuItem
+            Set psCaption to "New Jugador"
+            Set psCSSClass to "WebClearMenuItem"
+            WebRegisterPath ntNavigateForward oZoomJugador
+            Procedure OnClick
+                Send NavigatePath
+            End_Procedure
+            Procedure OnGetNavigateForwardData tWebNavigateData ByRef NavigateData Handle hoToView
+                Move True to NavigateData.bNewRecord
+            End_Procedure
+        End_Object
+    End_Object
+End_Object
