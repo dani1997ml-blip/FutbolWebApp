@@ -4,6 +4,9 @@ Use cWebForm.pkg
 Use cWebMenuGroup.pkg
 Use cWebMenuItem.pkg
 Use cEquipoDataDictionary.dd
+Use cLigaDataDictionary.dd
+
+Register_Object oSelectLiga
 
 Object oZoomEquipo is a cWebView
     Set peViewType to vtZoom
@@ -11,7 +14,10 @@ Object oZoomEquipo is a cWebView
     Set pbShowCaption to False
     Set piMaxWidth to 1024
     Set Verify_Save_msg to 0
+    Object oLiga_DD is a cLigaDataDictionary
+    End_Object
     Object oEquipo_DD is a cEquipoDataDictionary
+        Set DDO_Server to oLiga_DD
     End_Object
     Set Main_DD to oEquipo_DD
     Set Server to oEquipo_DD
@@ -35,6 +41,24 @@ Object oZoomEquipo is a cWebView
         End_Object
     End_Object
     Object oActionGroup is a cWebMenuGroup
+        Object oVerLiga is a cWebMenuItem
+            Set psCaption to "Ver Liga"
+            Set psCSSClass to "WebPromptMenuItem"
+            WebRegisterPath ntNavigateForward oSelectLiga
+
+            Procedure OnClick
+                Send NavigateForward to oSelectLiga Self
+            End_Procedure
+
+            Procedure OnGetNavigateForwardData tWebNavigateData ByRef NavigateData Handle hoToView
+                RowID riLiga
+
+                Get CurrentRowId of oLiga_DD to riLiga
+                Move Liga.File_Number to NavigateData.iTable
+                Move (SerializeRowID(riLiga)) to NavigateData.sRowID
+            End_Procedure
+        End_Object
+
         Object oSave is a cWebMenuItem
             Set psCaption to "Save"
             Set psCSSClass to "WebSaveMenuItem"

@@ -4,6 +4,9 @@ Use cWebForm.pkg
 Use cWebMenuGroup.pkg
 Use cWebMenuItem.pkg
 Use cJugadorDataDictionary.dd
+Use cEquipoDataDictionary.dd
+
+Register_Object oSelectPosicion
 
 Object oZoomJugador is a cWebView
     Set peViewType to vtZoom
@@ -11,7 +14,10 @@ Object oZoomJugador is a cWebView
     Set pbShowCaption to False
     Set piMaxWidth to 1024
     Set Verify_Save_msg to 0
+    Object oEquipo_DD is a cEquipoDataDictionary
+    End_Object
     Object oJugador_DD is a cJugadorDataDictionary
+        Set DDO_Server to oEquipo_DD
     End_Object
     Set Main_DD to oJugador_DD
     Set Server to oJugador_DD
@@ -45,6 +51,16 @@ Object oZoomJugador is a cWebView
         End_Object
     End_Object
     Object oActionGroup is a cWebMenuGroup
+        Object oVerPosiciones is a cWebMenuItem
+            Set psCaption to "Posiciones"
+            Set psCSSClass to "WebPromptMenuItem"
+            WebRegisterPath ntNavigateForwardCustom oSelectPosicion
+
+            Procedure OnClick
+                Send NavigateForwardCustom to oSelectPosicion Self
+            End_Procedure
+        End_Object
+
         Object oSave is a cWebMenuItem
             Set psCaption to "Save"
             Set psCSSClass to "WebSaveMenuItem"

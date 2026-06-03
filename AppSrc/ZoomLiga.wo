@@ -1,9 +1,13 @@
 Use cWebView.pkg
 Use cWebPanel.pkg
 Use cWebForm.pkg
+Use cWebColumn.pkg
 Use cWebMenuGroup.pkg
 Use cWebMenuItem.pkg
 Use cLigaDataDictionary.dd
+Use cEquipoDataDictionary.dd
+
+Register_Object oSelectEquipo
 
 Object oZoomLiga is a cWebView
     Set peViewType to vtZoom
@@ -14,6 +18,10 @@ Object oZoomLiga is a cWebView
     Set psStateViewName to "Liga"
 
     Object oLiga_DD is a cLigaDataDictionary
+    End_Object
+    Object oEquipo_DD is a cEquipoDataDictionary
+        Set DDO_Server to oLiga_DD
+        Set Constrain_File to Liga.File_Number
     End_Object
     Set Main_DD to oLiga_DD
     Set Server to oLiga_DD
@@ -46,9 +54,47 @@ Object oZoomLiga is a cWebView
             Set piColumnSpan to 3
             Set psLabel to "Max"
         End_Object
+
+        Object oEquiposLigaList is a cWebList
+            Set Server to oEquipo_DD
+            Set piColumnSpan to 12
+            Set piHeight to 260
+            Set psCaption to "Equipos de esta liga"
+            Set pbShowHeader to True
+            Set pbServerOnRowClick to True
+            Set piSortColumn to 0
+
+            Object oEquipoNombre is a cWebColumn
+                Entry_Item Equipo.Nombre
+                Set psCaption to "Equipo"
+            End_Object
+
+            Object oEquipoLiga is a cWebColumn
+                Entry_Item Equipo.LigaID
+                Set psCaption to "LigaID"
+            End_Object
+        End_Object
     End_Object
 
     Object oActionGroup is a cWebMenuGroup
+        Object oEquiposLiga is a cWebMenuItem
+            Set psCaption to "Equipos"
+            Set psCSSClass to "WebPromptMenuItem"
+            WebRegisterPath ntNavigateForward oSelectEquipo
+
+            Procedure OnClick
+                Send NavigateForward to oSelectEquipo Self
+            End_Procedure
+
+            Procedure OnGetNavigateForwardData tWebNavigateData ByRef NavigateData Handle hoToView
+                RowID riLiga
+
+                Get CurrentRowId of oLiga_DD to riLiga
+                Move Liga.File_Number to NavigateData.iTable
+                Move (SerializeRowID(riLiga)) to NavigateData.sRowID
+            End_Procedure
+        End_Object
+
         Object oSave is a cWebMenuItem
             Set psCaption to "Save"
             Set psCSSClass to "WebSaveMenuItem"

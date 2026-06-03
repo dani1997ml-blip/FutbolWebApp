@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Práctica de navegación en DataFlex</title>
+  <style>
+    body {
+      margin: 0;
+      background: #f4f7f6;
+      color: #14211f;
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.55;
+    }
+    main {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 42px 44px 64px;
+      background: #ffffff;
+    }
+    h1 {
+      margin: 0 0 18px;
+      font-size: 34px;
+      color: #063b33;
+      border-bottom: 4px solid #00c896;
+      padding-bottom: 12px;
+    }
+    h2 {
+      margin-top: 34px;
+      color: #063b33;
+      font-size: 24px;
+    }
+    h3 {
+      margin-top: 26px;
+      color: #0b5147;
+      font-size: 19px;
+    }
+    p, li {
+      font-size: 15.5px;
+    }
+    img {
+      display: block;
+      max-width: 100%;
+      margin: 14px 0 26px;
+      border: 1px solid #cbd5d1;
+    }
+    code, pre {
+      font-family: Consolas, monospace;
+    }
+    pre {
+      background: #111827;
+      color: #e5e7eb;
+      padding: 14px 16px;
+      overflow: auto;
+    }
+    .meta {
+      color: #53625f;
+      font-size: 14px;
+      margin-bottom: 28px;
+    }
+  </style>
+</head>
+<body>
+<main>
+  <h1>Práctica de navegación en DataFlex</h1>
+  <p class="meta">Proyecto: <strong>FutbolWebApp</strong> · Documento de desarrollo de la práctica</p>
+
+  <h2>1. Introducción</h2>
+  <p>En esta práctica se ha trabajado sobre el proyecto <strong>FutbolWebApp</strong>, una aplicación web desarrollada con DataFlex. El objetivo principal ha sido implementar y documentar distintos casos de navegación entre vistas <strong>Select</strong> y <strong>Zoom</strong>, utilizando los mecanismos propios de DataFlex: <code>NavigateForward</code>, <code>NavigateForwardCustom</code>, <code>WebRegisterPath</code> y la estructura <code>tWebNavigateData</code>.</p>
+  <p>También se ha corregido la configuración del proyecto para que DataFlex Studio reconozca correctamente los diccionarios de datos y la conexión a base de datos.</p>
+
+  <h2>2. Objetivos de la práctica</h2>
+  <ul>
+    <li>Revisar los participantes que intervienen en una navegación.</li>
+    <li>Implementar navegaciones entre las vistas de <strong>Liga</strong>, <strong>Equipo</strong>, <strong>Jugador</strong> y <strong>Posicion</strong>.</li>
+    <li>Usar <code>tWebNavigateData</code> para enviar información entre vistas.</li>
+    <li>Añadir una relación padre-hijo entre <strong>Liga</strong> y <strong>Equipo</strong>.</li>
+    <li>Registrar los diccionarios de datos del proyecto.</li>
+    <li>Verificar que el proyecto compila sin errores.</li>
+  </ul>
+
+  <h2>3. Desarrollo realizado</h2>
+
+  <h3>3.1. Navegación desde Liga hacia Equipos</h3>
+  <p>En la vista <code>ZoomLiga.wo</code> se añadió el diccionario de datos de <strong>Equipo</strong> como hijo de <strong>Liga</strong>. Para ello se declaró <code>oEquipo_DD</code>, se enlazó con <code>oLiga_DD</code> mediante <code>DDO_Server</code> y se aplicó <code>Constrain_File</code> para limitar los equipos mostrados a la liga actual.</p>
+  <p>Además, se añadió una lista dentro del propio zoom de liga para visualizar directamente los equipos pertenecientes a la liga abierta.</p>
+  <img src="capturas/01_zoom_liga.png" alt="Captura de ZoomLiga">
+
+  <h3>3.2. Preparación de SelectEquipo como vista hija</h3>
+  <p>En <code>SelectEquipo.wo</code> se añadió el DD de <strong>Liga</strong> para que <strong>Equipo</strong> pueda comportarse correctamente como tabla hija. Con esta modificación, la vista puede recibir una navegación desde una liga y mostrar únicamente los equipos relacionados.</p>
+  <img src="capturas/02_select_equipo.png" alt="Captura de SelectEquipo">
+
+  <h3>3.3. Navegación desde Equipo hacia Liga</h3>
+  <p>En <code>ZoomEquipo.wo</code> se implementó el botón <strong>Ver Liga</strong>. Este botón permite navegar desde el zoom de un equipo hacia la vista de selección de ligas. Para realizarlo se obtiene el <code>RowId</code> de la liga actual y se asigna a <code>NavigateData.sRowID</code>.</p>
+  <img src="capturas/03_zoom_equipo.png" alt="Captura de ZoomEquipo">
+
+  <h3>3.4. Navegación custom desde Jugador hacia Posiciones</h3>
+  <p>En <code>ZoomJugador.wo</code> se añadió el botón <strong>Posiciones</strong>. En este caso se utiliza <code>NavigateForwardCustom</code>, porque en el proyecto no existe una relación directa entre los DD de <strong>Jugador</strong> y <strong>Posicion</strong>.</p>
+  <img src="capturas/04_zoom_jugador.png" alt="Captura de ZoomJugador">
+
+  <h3>3.5. Registro de diccionarios de datos</h3>
+  <p>Al abrir el proyecto en DataFlex Studio aparecía el aviso de que no había diccionarios de datos definidos. Para solucionarlo se creó el archivo <code>DDSrc/DDClassList.xml</code>, donde se registran los DD principales del proyecto.</p>
+  <img src="capturas/05_ddclasslist.png" alt="Captura de DDClassList">
+
+  <h3>3.6. Conexión administrada a base de datos</h3>
+  <p>También se añadió una conexión administrada llamada <strong>FutbolDB</strong> en <code>Data/DFConnId.ini</code>. Después se actualizaron los archivos <code>.int</code> para usar una conexión administrada.</p>
+  <pre>SERVER_NAME DFCONNID=FutbolDB</pre>
+
+  <h2>4. Orden de eventos de navegación</h2>
+  <ol>
+    <li>Se ejecuta el <code>OnClick</code> del botón, menú o lista que inicia la navegación.</li>
+    <li>Se llama a <code>NavigateForward</code>, <code>NavigateForwardCustom</code> o <code>NavigatePath</code>.</li>
+    <li>DataFlex determina el tipo de navegación: <code>nfFromMain</code>, <code>nfFromParent</code>, <code>nfFromChild</code> o <code>nfUndefined</code>.</li>
+    <li>El objeto invocador rellena los datos mediante <code>GetNavigateForwardData</code>.</li>
+    <li>Se puede personalizar la información en <code>OnGetNavigateForwardData</code>.</li>
+    <li>La vista destino recibe la navegación y aplica restricciones o búsquedas.</li>
+    <li>Se ejecutan los eventos de visualización de la vista cuando correspondan.</li>
+  </ol>
+
+  <h2>5. Verificación</h2>
+  <p>Después de realizar los cambios, se compiló el proyecto con el compilador de DataFlex 25.0. El resultado fue correcto, sin errores ni avisos.</p>
+  <img src="capturas/06_compilacion.png" alt="Captura de compilación">
+
+  <h2>6. Conclusión</h2>
+  <p>La práctica ha permitido aplicar los conceptos principales de navegación en una aplicación web DataFlex. Se han implementado casos de navegación entre vistas relacionadas, se ha usado <code>tWebNavigateData</code> para transportar información entre vistas y se ha corregido la configuración del entorno para que DataFlex Studio reconozca los diccionarios de datos del proyecto.</p>
+  <p>El resultado final es un proyecto que compila correctamente y que refleja los casos pedidos en la práctica.</p>
+</main>
+</body>
+</html>

@@ -5,6 +5,7 @@ Use cWebColumnButton.pkg
 Use cWebMenuGroup.pkg
 Use cWebMenuItem.pkg
 Use cEquipoDataDictionary.dd
+Use cLigaDataDictionary.dd
 
 Register_Object oZoomEquipo
 
@@ -15,7 +16,10 @@ Object oSelectEquipo is a cWebView
     Set pbShowCaption to False
     Set psStateViewName to "Equipos"
 
+    Object oLiga_DD is a cLigaDataDictionary
+    End_Object
     Object oEquipo_DD is a cEquipoDataDictionary
+        Set DDO_Server to oLiga_DD
     End_Object
     Set Main_DD to oEquipo_DD
     Set Server to oEquipo_DD

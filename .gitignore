@@ -21,5 +21,7 @@ AppSrc/*.prn
 # Local editor and OS files
 .vs/
 .vscode/
+AppSrc/config/
+IdeSrc/
 Thumbs.db
 Desktop.ini
